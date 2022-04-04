@@ -16,7 +16,6 @@ public class DeviceEntityTypeConfiguration : IEntityTypeConfiguration<Device>
         deviceConfig
             .HasMany(d => d.Tags)
             .WithOne()
-            .HasForeignKey(t => t.DeviceId)
-            .IsRequired();
+            .HasForeignKey(t => t.DeviceId);
     }
 }

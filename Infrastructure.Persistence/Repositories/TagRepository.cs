@@ -1,7 +1,11 @@
 ﻿namespace Infrastructure.Persistence.Repositories;
 
-public class TagRepository : ITagRepository
+public class TagRepository : BaseRepository, ITagRepository
 {
+    public TagRepository(ApplicationDbContext context) : base(context)
+    {
+    }
+
     public Task Add(Tag tag)
     {
         throw new NotImplementedException();

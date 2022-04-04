@@ -1,6 +1,6 @@
 ﻿namespace Domain.Repositories;
 
-public interface IDeviceRepository
+public interface IDeviceRepository : IRepository
 {
     Task Add(Device device);
     Task Update(Device device);

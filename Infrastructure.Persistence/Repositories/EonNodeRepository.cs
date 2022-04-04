@@ -1,7 +1,11 @@
 ﻿namespace Infrastructure.Persistence.Repositories;
 
-public class EonNodeRepository : IEonNodeRepository
+public class EonNodeRepository : BaseRepository, IEonNodeRepository
 {
+    public EonNodeRepository(ApplicationDbContext context) : base(context)
+    {
+    }
+
     public Task Add(EonNode node)
     {
         throw new NotImplementedException();

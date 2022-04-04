@@ -1,7 +1,11 @@
 ﻿namespace Infrastructure.Persistence.Repositories;
 
-public class DeviceRepository : IDeviceRepository
+public class DeviceRepository : BaseRepository, IDeviceRepository
 {
+    public DeviceRepository(ApplicationDbContext context) : base(context)
+    {
+    }
+
     public Task Add(Device device)
     {
         throw new NotImplementedException();

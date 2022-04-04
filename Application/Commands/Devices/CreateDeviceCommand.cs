@@ -1,17 +1,15 @@
-﻿namespace Domain.Models;
+﻿namespace Application.Commands.Devices;
 
-public class Device
+public class CreateDeviceCommand : IRequest<bool>
 {
     public string Id { get; set; }
     public string EonNodeId { get; set; }
     public bool Connected { get; set; }
-    public List<Tag> Tags { get; set; }
 
-    public Device(string id, string eonNodeId, bool connected)
+    public CreateDeviceCommand(string id, string eonNodeId, bool connected)
     {
         Id = id;
         EonNodeId = eonNodeId;
         Connected = connected;
-        Tags = new List<Tag>();
     }
 }

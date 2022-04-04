@@ -1,6 +1,6 @@
 ﻿namespace Domain.Repositories;
 
-public interface IEonNodeRepository
+public interface IEonNodeRepository : IRepository
 {
     Task Add(EonNode node);
     Task Update(EonNode node);
