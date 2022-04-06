@@ -15,6 +15,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSignalR();
+
 builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceInfrastructure(configuration);
 builder.Services.AddInfluxDbInfrastructure(configuration);
@@ -35,5 +37,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<WebSocketHub>("/websockethub");
 
 app.Run();
