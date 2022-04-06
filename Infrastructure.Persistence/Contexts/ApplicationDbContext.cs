@@ -2,6 +2,10 @@
 
 public class ApplicationDbContext : DbContext, IUnitOfWork
 {
+    public DbSet<EonNode> EonNodes { get; set; }
+    public DbSet<Device> Devices { get; set; }
+    public DbSet<Tag> Tags { get; set; }
+
     private IDbContextTransaction? _currentTransaction;
 
     public ApplicationDbContext(DbContextOptions options) : base(options)
@@ -14,7 +18,9 @@ public class ApplicationDbContext : DbContext, IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-
+        modelBuilder.ApplyConfiguration(new EonNodeEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new DeviceEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new TagEntityTypeConfiguration());
     }
 
     public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)

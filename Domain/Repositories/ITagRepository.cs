@@ -3,7 +3,7 @@
 public interface ITagRepository : IRepository
 {
     Task Add(Tag tag);
-    Task Update(Tag tag);
-    Task Delete(Tag tag);
+    void Update(Tag tag);
+    void Delete(Tag tag);
     Task<Tag> FindByTagName(string tagName);
 }

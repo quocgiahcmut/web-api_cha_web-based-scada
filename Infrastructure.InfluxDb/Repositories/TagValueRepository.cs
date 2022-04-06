@@ -11,18 +11,33 @@ public class TagValueRepository : InfluxBaseRepository, ITagValueRepository
         throw new NotImplementedException();
     }
 
-    public Task UpdateTag(string id, bool value)
+    public async Task UpdateTag(string id, bool value)
     {
-        throw new NotImplementedException();
+        PointData point = PointData
+            .Measurement("tableBool")
+            .Field(id, value)
+            .Timestamp(DateTime.UtcNow, WritePrecision.Ns);
+
+        await _context.WriteApiAsync.WritePointAsync(point);
     }
 
-    public Task UpdateTag(string id, int value)
+    public async Task UpdateTag(string id, int value)
     {
-        throw new NotImplementedException();
+        PointData point = PointData
+            .Measurement("tableInt")
+            .Field(id, value)
+            .Timestamp(DateTime.UtcNow, WritePrecision.Ns);
+
+        await _context.WriteApiAsync.WritePointAsync(point);
     }
 
-    public Task UpdateTag(string id, double value)
+    public async Task UpdateTag(string id, double value)
     {
-        throw new NotImplementedException();
+        PointData point = PointData
+            .Measurement("tableDouble")
+            .Field(id, value)
+            .Timestamp(DateTime.UtcNow, WritePrecision.Ns);
+
+        await _context.WriteApiAsync.WritePointAsync(point);
     }
 }

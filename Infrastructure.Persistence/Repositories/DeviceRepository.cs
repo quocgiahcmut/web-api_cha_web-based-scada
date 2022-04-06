@@ -6,23 +6,26 @@ public class DeviceRepository : BaseRepository, IDeviceRepository
     {
     }
 
-    public Task Add(Device device)
+    public async Task Add(Device device)
     {
-        throw new NotImplementedException();
+        await _context.Devices.AddRangeAsync(device);
     }
 
-    public Task Delete(Device device)
+    public  void Delete(Device device)
     {
-        throw new NotImplementedException();
+        _context.Devices.Remove(device);
     }
 
-    public Task<Device> FindById(string deviceId)
+    public async Task<Device?> FindById(string deviceId)
     {
-        throw new NotImplementedException();
+        return await _context.Devices
+            .Include(d => d.Tags)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(d => d.Id == deviceId);
     }
 
-    public Task Update(Device device)
+    public void Update(Device device)
     {
-        throw new NotImplementedException();
+        _context.Devices.Update(device);
     }
 }

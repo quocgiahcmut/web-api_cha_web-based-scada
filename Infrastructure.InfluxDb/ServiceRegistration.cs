@@ -2,12 +2,15 @@
 
 public static class ServiceRegistration
 {
-    public static void AddInfluxDBInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static void AddInfluxDbInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<InfluxDbContextOptions>(configuration.GetSection("InfluxDbContextOptions"));
         services.AddScoped<InfluxDbContext>();
 
+        #region Add Repositories
 
+        services.AddTransient<ITagValueRepository, TagValueRepository>();
 
+        #endregion
     }
 }

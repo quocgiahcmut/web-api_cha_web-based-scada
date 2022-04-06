@@ -3,7 +3,7 @@
 public interface IEonNodeRepository : IRepository
 {
     Task Add(EonNode node);
-    Task Update(EonNode node);
-    Task Delete(EonNode node);
+    void Update(EonNode node);
+    void Delete(EonNode node);
     Task<EonNode> FindById(string eonNodeId);
 }

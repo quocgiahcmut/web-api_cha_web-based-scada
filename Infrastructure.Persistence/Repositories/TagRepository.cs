@@ -6,23 +6,25 @@ public class TagRepository : BaseRepository, ITagRepository
     {
     }
 
-    public Task Add(Tag tag)
+    public async Task Add(Tag tag)
     {
-        throw new NotImplementedException();
+        await _context.Tags.AddRangeAsync(tag);
     }
 
-    public Task Delete(Tag tag)
+    public void Delete(Tag tag)
     {
-        throw new NotImplementedException();
+        _context.Tags.Remove(tag);
     }
 
-    public Task<Tag> FindByTagName(string tagName)
+    public Task<Tag?> FindByTagName(string tagName)
     {
-        throw new NotImplementedException();
+        return _context.Tags
+            .AsNoTracking()
+            .FirstOrDefaultAsync(t => t.Name == tagName);
     }
 
-    public Task Update(Tag tag)
+    public void Update(Tag tag)
     {
-        throw new NotImplementedException();
+        _context.Tags.Update(tag);
     }
 }

@@ -43,7 +43,7 @@ public class InfluxDbContext
         Bucket = parameter.Bucket;
         InfluxDbUrl = parameter.InfluxDbUrl;
 
-        Client = InfluxDBClientFactory.Create(InfluxDBUrl, Token.ToCharArray());
+        Client = InfluxDBClientFactory.Create(InfluxDbUrl, Token.ToCharArray());
         _writeApiAsync = Client.GetWriteApiAsync();
         _queryApiSync = Client.GetQueryApiSync();
     }

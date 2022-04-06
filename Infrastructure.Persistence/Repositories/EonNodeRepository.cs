@@ -6,23 +6,27 @@ public class EonNodeRepository : BaseRepository, IEonNodeRepository
     {
     }
 
-    public Task Add(EonNode node)
+    public async Task Add(EonNode node)
     {
-        throw new NotImplementedException();
+        await _context.EonNodes.AddRangeAsync(node);
     }
 
-    public Task Delete(EonNode node)
+    public void Delete(EonNode node)
     {
-        throw new NotImplementedException();
+        _context.EonNodes.Remove(node);
     }
 
-    public Task<EonNode> FindById(string eonNodeId)
+    public async Task<EonNode?> FindById(string eonNodeId)
     {
-        throw new NotImplementedException();
+        return await _context.EonNodes
+            .Include(e => e.Devices)
+            .ThenInclude(d => d.Tags)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Id == eonNodeId);
     }
 
-    public Task Update(EonNode node)
+    public void Update(EonNode node)
     {
-        throw new NotImplementedException();
+        _context.EonNodes.Update(node);
     }
 }
