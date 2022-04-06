@@ -15,6 +15,8 @@ public class EonNodeConnectionChangedEventHandler : INotificationHandler<EonNode
 
         eonNode.Connected = notification.Connected;
         
-        await _repository.Update(eonNode);
+        _repository.Update(eonNode);
+
+        await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
     }
 }

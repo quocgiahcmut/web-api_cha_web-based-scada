@@ -23,4 +23,19 @@ public class TagsController : ControllerBase
 
         return Ok();
     }
+
+    [HttpDelete("{tagName}")]
+    public async Task<IActionResult> Detele(string tagName)
+    {
+        var command = new DeleteTagCommand(tagName);
+
+        var result = await _mediator.Send(command);
+
+        if (!result)
+        {
+            return BadRequest();
+        }
+
+        return Ok();
+    }
 }

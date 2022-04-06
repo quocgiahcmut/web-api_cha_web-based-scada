@@ -15,6 +15,8 @@ public class DeviceConnectionChangedEventHandler : INotificationHandler<DeviceCo
 
         device.Connected = notification.Connected;
 
-        await _repository.Update(device);
+        _repository.Update(device);
+
+        await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
     }
 }

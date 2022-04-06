@@ -23,4 +23,19 @@ public class DevicesController : ControllerBase
 
         return Ok();
     }
+
+    [HttpDelete("{deviceId}")]
+    public async Task<IActionResult> Delete(string deviceId)
+    {
+        var command = new DeleteDeviceCommand(deviceId);
+
+        var result = await _mediator.Send(command);
+
+        if (!result)
+        {
+            return BadRequest();
+        }
+
+        return Ok();
+    }
 }

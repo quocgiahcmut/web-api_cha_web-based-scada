@@ -24,4 +24,19 @@ public class NodesController : ControllerBase
         return Ok();
     }
 
+    [HttpDelete("{eonNodeId}")]
+    public async Task<IActionResult> Delete(string eonNodeId)
+    {
+        var command = new DeleteNodeCommand(eonNodeId);
+
+        var result = await _mediator.Send(command);
+
+        if (!result)
+        {
+            return BadRequest();
+        }
+
+        return Ok();
+    }
+
 }
