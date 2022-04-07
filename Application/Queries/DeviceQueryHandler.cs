@@ -25,7 +25,7 @@ public class DeviceQueryHandler : IRequestHandler<DeviceQuery, DeviceQueryResult
         foreach (string tagName in request.TagNames)
         {
             var tag = await _tagRepository.FindByTagName(tagName);
-            var tagValue = _tagValueRepository.GetLatestValue(tag.Id);
+            var tagValue = await _tagValueRepository.GetLatestValue(tag.Id);
 
             TagQueryResult tagQueryResult = new TagQueryResult()
             {

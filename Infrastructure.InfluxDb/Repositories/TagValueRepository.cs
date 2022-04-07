@@ -6,9 +6,13 @@ public class TagValueRepository : InfluxBaseRepository, ITagValueRepository
     {
     }
 
-    public Task<object> GetLatestValue(string id)
+    public async Task<object> GetLatestValue(string id)
     {
-        throw new NotImplementedException();
+        var query = _context.GetFlux24HourQuery("table1", id);
+
+        var result = await _context.QueryAsync(query);
+
+        return result.Last().FieldValue;
     }
 
     public async Task UpdateTag(string id, bool value)
@@ -18,7 +22,7 @@ public class TagValueRepository : InfluxBaseRepository, ITagValueRepository
             .Field(id, value)
             .Timestamp(DateTime.UtcNow, WritePrecision.Ns);
 
-        await _context.WriteApiAsync.WritePointAsync(point);
+        await _context.WriteAsync(point);
     }
 
     public async Task UpdateTag(string id, int value)
@@ -28,7 +32,7 @@ public class TagValueRepository : InfluxBaseRepository, ITagValueRepository
             .Field(id, value)
             .Timestamp(DateTime.UtcNow, WritePrecision.Ns);
 
-        await _context.WriteApiAsync.WritePointAsync(point);
+        await _context.WriteAsync(point);
     }
 
     public async Task UpdateTag(string id, double value)
@@ -38,6 +42,6 @@ public class TagValueRepository : InfluxBaseRepository, ITagValueRepository
             .Field(id, value)
             .Timestamp(DateTime.UtcNow, WritePrecision.Ns);
 
-        await _context.WriteApiAsync.WritePointAsync(point);
+        await _context.WriteAsync(point);
     }
 }

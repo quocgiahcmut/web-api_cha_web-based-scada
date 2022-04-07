@@ -8,12 +8,13 @@ public class NodeQueryHandler : IRequestHandler<NodeQuery, NodeQueryResult>
     private readonly ITagValueRepository _tagValueRepository;
     private readonly IMediator _mediator;
 
-    public NodeQueryHandler(IEonNodeRepository nodeRepository, IDeviceRepository deviceRepository, ITagRepository tagRepository, ITagValueRepository tagValueRepository)
+    public NodeQueryHandler(IEonNodeRepository nodeRepository, IDeviceRepository deviceRepository, ITagRepository tagRepository, ITagValueRepository tagValueRepository, IMediator mediator)
     {
         _nodeRepository = nodeRepository;
         _deviceRepository = deviceRepository;
         _tagRepository = tagRepository;
         _tagValueRepository = tagValueRepository;
+        _mediator = mediator;
     }
 
     public async Task<NodeQueryResult> Handle(NodeQuery request, CancellationToken cancellationToken)
