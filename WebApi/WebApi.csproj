@@ -32,8 +32,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="SparkplugApplication\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="SparkplugNet">
-      <HintPath>..\..\LIBRARY_SCADA\SparkplugNet.dll</HintPath>
+      <HintPath>..\lib\SparkplugNet.dll</HintPath>
     </Reference>
   </ItemGroup>
 
