@@ -11,7 +11,7 @@ public class CreateTagCommandHandler : IRequestHandler<CreateTagCommand, bool>
 
     public async Task<bool> Handle(CreateTagCommand request, CancellationToken cancellationToken)
     {
-        var tag = new Tag(request.Id, request.Name, request.DeviceId, request.EonNodeId, request.DataType);
+        var tag = new Tag(request.TagId, request.TagName, request.DeviceId, request.EonNodeId, request.DataType);
 
         await _tagRepository.Add(tag);
 

@@ -11,7 +11,7 @@ public class CreateNodeCommandHandler : IRequestHandler<CreateNodeCommand, bool>
 
     public async Task<bool> Handle(CreateNodeCommand request, CancellationToken cancellationToken)
     {
-        var eonNode = new EonNode(request.Id, request.Connected);
+        var eonNode = new EonNode(request.NodeId, request.Connected);
 
         await _repository.Add(eonNode);
 

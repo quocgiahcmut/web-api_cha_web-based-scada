@@ -11,7 +11,7 @@ public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, b
 
     public async Task<bool> Handle(CreateDeviceCommand request, CancellationToken cancellationToken)
     {
-        var device = new Device(request.Id, request.EonNodeId, request.Connected);
+        var device = new Device(request.DeviceId, request.EonNodeId, request.Connected);
 
         await _deviceRepository.Add(device);
 

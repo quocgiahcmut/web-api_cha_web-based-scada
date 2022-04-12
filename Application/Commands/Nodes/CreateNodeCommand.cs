@@ -2,12 +2,12 @@
 
 public class CreateNodeCommand : IRequest<bool>
 {
-    public string Id { get; set; }
+    public string NodeId { get; set; }
     public bool Connected { get; set; }
 
-    public CreateNodeCommand(string id, bool connected)
+    public CreateNodeCommand(string nodeId, bool connected)
     {
-        Id = id;
+        NodeId = nodeId;
         Connected = connected;
     }
 }
