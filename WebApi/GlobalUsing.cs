@@ -4,6 +4,9 @@ global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.SignalR;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.Options;
 
 global using SparkplugNet;
 global using SparkplugNet.Core;
@@ -21,8 +24,11 @@ global using Application.Commands.Tags;
 global using Application.Queries;
 global using Application.Wrappers;
 
+global using Domain.Events;
+
 global using Infrastructure.Persistence;
 
 global using Infrastructure.InfluxDb;
 
 global using WebApi.Hubs;
+global using WebApi.Sparkplug;

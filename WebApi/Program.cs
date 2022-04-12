@@ -20,10 +20,15 @@ builder.Services.AddSignalR();
 builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceInfrastructure(configuration);
 builder.Services.AddInfluxDbInfrastructure(configuration);
+builder.Services.AddSparkplugApplicationService(configuration);
 
 #endregion
 
 var app = builder.Build();
+
+var sparkplugApplication = app.Services.GetService<SparkplugDataAdapter>();
+
+await sparkplugApplication.StartApplicationAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
