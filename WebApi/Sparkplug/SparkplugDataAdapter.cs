@@ -33,6 +33,8 @@ public class SparkplugDataAdapter
             );
 
         _sparkplugApplication.SparkplugNodeConnectionChangedEvent = HandleNodeConnectionChanged;
+        _sparkplugApplication.SparkplugDeviceConnectionChangedEvent = HandleDeviceConnectionChanged;
+        _sparkplugApplication.SparkplugMetricsChangedEvent = HandleMetricsUpdated;
     }
 
     public async Task StartApplicationAsync()
