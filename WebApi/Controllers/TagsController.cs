@@ -13,6 +13,14 @@ public class TagsController : ControllerBase
         _sparkplugDataAdapter = sparkplugDataAdapter;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAllTags()
+    {
+        var result = await _mediator.Send(new GetAllTagsQuery());
+
+        return Ok(result);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CreateTagCommand command)
     {

@@ -6,4 +6,5 @@ public interface ITagRepository : IRepository
     void Update(Tag tag);
     void Delete(Tag tag);
     Task<Tag> FindByTagName(string tagName);
+    Task<IEnumerable<Tag>> GetAllTag();
 }

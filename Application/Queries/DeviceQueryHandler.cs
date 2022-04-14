@@ -25,7 +25,20 @@ public class DeviceQueryHandler : IRequestHandler<DeviceQuery, DeviceQueryResult
         foreach (string tagName in request.TagNames)
         {
             var tag = await _tagRepository.FindByTagName(tagName);
-            var tagValue = await _tagValueRepository.GetLatestValue(tag.Id);
+
+            var tagValue = new Object();
+            switch (tag.DataType)
+            {
+                case EDataType.Boolean:
+                    tagValue = await _tagValueRepository.GetLatestValue("tableBool", tag.Id);
+                    break;
+                case EDataType.Integer:
+                    tagValue = await _tagValueRepository.GetLatestValue("tableInt", tag.Id);
+                    break;
+                case EDataType.Double:
+                    tagValue = await _tagValueRepository.GetLatestValue("tableDouble", tag.Id);
+                    break;
+            }
 
             TagQueryResult tagQueryResult = new TagQueryResult()
             {

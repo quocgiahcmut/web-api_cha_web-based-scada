@@ -25,7 +25,7 @@ public class SparkplugDataAdapter
 
         var applicationMetrics = new List<Metric>()
         {
-            new Metric { Name = "tag111", ValueCase = DataType.Int32, IntValue = 111 }
+            new Metric { Name = "tag000", ValueCase = DataType.Int32, IntValue = 111 }
         };
 
         _sparkplugApplication = new SparkplugApplication(applicationMetrics, Log.Logger);
@@ -88,7 +88,7 @@ public class SparkplugDataAdapter
             var mediator = scope.ServiceProvider.GetService<IMediator>();
 
             await mediator.Publish(notification);
-        }
+        } 
     }
     
     public async void HandleDeviceConnectionChanged(SparkplugDeviceConnectionChangedEvent e)

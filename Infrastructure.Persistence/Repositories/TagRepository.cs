@@ -27,4 +27,11 @@ public class TagRepository : BaseRepository, ITagRepository
     {
         _context.Tags.Update(tag);
     }
+
+    public async Task<IEnumerable<Tag>> GetAllTag()
+    {
+        return await _context.Tags
+            .AsNoTracking()
+            .ToListAsync();
+    }
 }

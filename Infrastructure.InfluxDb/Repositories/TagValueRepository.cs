@@ -6,9 +6,9 @@ public class TagValueRepository : InfluxBaseRepository, ITagValueRepository
     {
     }
 
-    public async Task<object> GetLatestValue(string id)
+    public async Task<object> GetLatestValue(string table, string id)
     {
-        var query = _context.GetFlux24HourQuery("table1", id);
+        var query = _context.GetFlux24HourQuery(table, id);
 
         var result = await _context.QueryAsync(query);
 
