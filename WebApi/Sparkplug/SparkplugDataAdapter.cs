@@ -4,14 +4,14 @@ namespace WebApi.Sparkplug;
 
 public class SparkplugDataAdapter
 {
-    private readonly IMediator _mediator;
+    private readonly IServiceScopeFactory _serviceScopeFactory;
 
     private VersionB.SparkplugApplication _sparkplugApplication;
     private SparkplugApplicationOptions _sparkplugApplicationOptions;
 
-    public SparkplugDataAdapter(IOptions<SparkplugDataAdapterOptions> options, IMediator mediator)
+    public SparkplugDataAdapter(IOptions<SparkplugDataAdapterOptions> options, IServiceScopeFactory serviceScopeFactory)
     {
-        _mediator = mediator;
+        _serviceScopeFactory = serviceScopeFactory;
 
         SparkplugDataAdapterOptions parameter = options.Value;
 
@@ -81,17 +81,38 @@ public class SparkplugDataAdapter
 
     public async void HandleNodeConnectionChanged(SparkplugNodeConnectionChangedEvent e)
     {
+        var notification = new EonNodeConnectionChangedEvent(e.EonNodeId, e.Connected);
 
+        using (var scope = _serviceScopeFactory.CreateScope())
+        {
+            var mediator = scope.ServiceProvider.GetService<IMediator>();
+
+            await mediator.Publish(notification);
+        }
     }
     
     public async void HandleDeviceConnectionChanged(SparkplugDeviceConnectionChangedEvent e)
     {
+        var notification = new DeviceConnectionChangedEvent(e.EonNodeId, e.DeviceId, e.Connected);
 
+        using (var scope = _serviceScopeFactory.CreateScope())
+        {
+            var mediator = scope.ServiceProvider.GetService<IMediator>();
+
+            await mediator.Publish(notification);
+        }
     }
 
     public async void HandleMetricsUpdated(SparkplugMetricsChangedEvent e)
     {
+        var notification = new TagValuesUpdatedEvent(e.EonNodeId, e.DeviceId, e.TagName, e.Value);
 
+        using (var scope = _serviceScopeFactory.CreateScope())
+        {
+            var mediator = scope.ServiceProvider.GetService<IMediator>();
+
+            await mediator.Publish(notification);
+        }
     }
 
     public List<Metric> KnownMetrics()
