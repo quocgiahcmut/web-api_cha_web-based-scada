@@ -1,11 +1,9 @@
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
-
-#region Configuration 
+// Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddControllersWithViews();
 
 builder.Services.AddCors(options =>
     options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()
@@ -21,8 +19,6 @@ builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceInfrastructure(configuration);
 builder.Services.AddInfluxDbInfrastructure(configuration);
 builder.Services.AddSparkplugApplicationService(configuration);
-
-#endregion
 
 var app = builder.Build();
 

@@ -25,6 +25,7 @@ global using Application.Queries;
 global using Application.Wrappers;
 
 global using Domain.Events;
+global using Domain.Models;
 
 global using Infrastructure.Persistence;
 

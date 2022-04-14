@@ -5,10 +5,12 @@
 public class TagsController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly SparkplugDataAdapter _sparkplugDataAdapter;
 
-    public TagsController(IMediator mediator)
+    public TagsController(IMediator mediator, SparkplugDataAdapter sparkplugDataAdapter)
     {
         _mediator = mediator;
+        _sparkplugDataAdapter = sparkplugDataAdapter;
     }
 
     [HttpPost]
@@ -20,6 +22,8 @@ public class TagsController : ControllerBase
         {
             return BadRequest();
         }
+
+        _sparkplugDataAdapter.AddKnownMetric(command.TagName, command.DataType);
 
         return Ok();
     }
