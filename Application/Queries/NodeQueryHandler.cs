@@ -21,9 +21,11 @@ public class NodeQueryHandler : IRequestHandler<NodeQuery, NodeQueryResult>
     {
         var eonNode = await _nodeRepository.FindById(request.EonNodeId);
 
-        NodeQueryResult nodeQueryResult = new NodeQueryResult();
-
-        nodeQueryResult.EonNodeId = eonNode.Id;
+        NodeQueryResult nodeQueryResult = new NodeQueryResult
+        {
+            EonNodeId = eonNode.Id,
+            DeviceQueryResults = new List<DeviceQueryResult>()
+        };
 
         foreach (DeviceQuery deviceQuery in request.DeviceQueries)
         {

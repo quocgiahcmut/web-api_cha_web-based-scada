@@ -17,10 +17,12 @@ public class DeviceQueryHandler : IRequestHandler<DeviceQuery, DeviceQueryResult
     {
         var device = await _deviceRepository.FindById(request.DeviceId);
 
-        DeviceQueryResult deviceQueryResult = new DeviceQueryResult();
-
-        deviceQueryResult.DeviceId = device.Id;
-        deviceQueryResult.Connected = device.Connected;
+        DeviceQueryResult deviceQueryResult = new DeviceQueryResult
+        {
+            DeviceId = device.Id,
+            Connected = device.Connected,
+            TagQueryResults = new List<TagQueryResult>()
+        };
 
         foreach (string tagName in request.TagNames)
         {
@@ -40,7 +42,7 @@ public class DeviceQueryHandler : IRequestHandler<DeviceQuery, DeviceQueryResult
                     break;
             }
 
-            TagQueryResult tagQueryResult = new TagQueryResult()
+            var tagQueryResult = new TagQueryResult
             {
                 TagName = tag.Name,
                 Value = tagValue
