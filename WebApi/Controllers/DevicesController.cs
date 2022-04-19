@@ -11,10 +11,18 @@ public class DevicesController : ControllerBase
         _mediator = mediator;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAllDevices()
+    {
+        var result = await _mediator.Send(new GetAllDevicesQuery());
+
+        return Ok(result);
+    }
+
     [HttpGet("{deviceId}")]
     public async Task<IActionResult> GetById(string deviceId)
     {
-        var query = new GetDeviceById(deviceId);
+        var query = new GetDeviceByIdQuery(deviceId);
 
         var result = await _mediator.Send(query);
 

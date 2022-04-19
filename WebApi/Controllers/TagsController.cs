@@ -21,6 +21,16 @@ public class TagsController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("{tagName}")]
+    public async Task<IActionResult> GetById(string tagName)
+    {
+        var query = new GetTagByTagNameQuery(tagName);
+
+        var result = await _mediator.Send(query);
+
+        return Ok(result);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CreateTagCommand command)
     {

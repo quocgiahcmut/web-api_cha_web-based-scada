@@ -6,4 +6,5 @@ public interface IEonNodeRepository : IRepository
     void Update(EonNode node);
     void Delete(EonNode node);
     Task<EonNode> FindById(string eonNodeId);
+    Task<IEnumerable<EonNode>> GetAllEonNode();
 }

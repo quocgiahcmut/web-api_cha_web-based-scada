@@ -1,10 +1,10 @@
 ﻿namespace Application.Queries.Nodes;
 
-public class GetNodeById : IRequest<EonNode>
+public class GetNodeByIdQuery : IRequest<EonNode>
 {
     public string NodeId { get; set; }
 
-    public GetNodeById(string nodeId)
+    public GetNodeByIdQuery(string nodeId)
     {
         NodeId = nodeId;
     }

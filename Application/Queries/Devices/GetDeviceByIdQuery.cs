@@ -1,10 +1,10 @@
 ﻿namespace Application.Queries.Devices;
 
-public class GetDeviceById : IRequest<Device>
+public class GetDeviceByIdQuery : IRequest<Device>
 {
     public string DeviceId { get; set; }
 
-    public GetDeviceById(string deviceId)
+    public GetDeviceByIdQuery(string deviceId)
     {
         DeviceId = deviceId;
     }

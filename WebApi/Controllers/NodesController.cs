@@ -11,10 +11,18 @@ public class NodesController : ControllerBase
         _mediator = mediator;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetAllNodes()
+    {
+        var result = await _mediator.Send(new GetAllNodesQuery());
+
+        return Ok(result);
+    }
+
     [HttpGet("{eonNodeId}")]
     public async Task<IActionResult> GetById(string eonNodeId)
     {
-        var query = new GetNodeById(eonNodeId);
+        var query = new GetNodeByIdQuery(eonNodeId);
 
         var result = await _mediator.Send(query);
 

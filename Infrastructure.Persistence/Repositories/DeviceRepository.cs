@@ -28,4 +28,11 @@ public class DeviceRepository : BaseRepository, IDeviceRepository
     {
         _context.Devices.Update(device);
     }
+
+    public async Task<IEnumerable<Device>> GetAllDevice()
+    {
+        return await _context.Devices
+            .AsNoTracking()
+            .ToListAsync();
+    }
 }

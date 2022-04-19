@@ -6,4 +6,5 @@ public interface IDeviceRepository : IRepository
     void Update(Device device);
     void Delete(Device device);
     Task<Device> FindById(string deviceId);
+    Task<IEnumerable<Device>> GetAllDevice();
 }

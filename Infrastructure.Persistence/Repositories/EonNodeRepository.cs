@@ -29,4 +29,11 @@ public class EonNodeRepository : BaseRepository, IEonNodeRepository
     {
         _context.EonNodes.Update(node);
     }
+
+    public async Task<IEnumerable<EonNode>> GetAllEonNode()
+    {
+        return await _context.EonNodes
+            .AsNoTracking()
+            .ToListAsync();
+    }
 }
