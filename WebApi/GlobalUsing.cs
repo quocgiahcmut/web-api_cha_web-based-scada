@@ -22,6 +22,8 @@ global using Application.Commands.Nodes;
 global using Application.Commands.Devices;
 global using Application.Commands.Tags;
 global using Application.Queries;
+global using Application.Queries.Nodes;
+global using Application.Queries.Devices;
 global using Application.Queries.Tags;
 global using Application.Wrappers;
 

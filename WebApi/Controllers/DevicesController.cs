@@ -11,6 +11,16 @@ public class DevicesController : ControllerBase
         _mediator = mediator;
     }
 
+    [HttpGet("{deviceId}")]
+    public async Task<IActionResult> GetById(string deviceId)
+    {
+        var query = new GetDeviceById(deviceId);
+
+        var result = await _mediator.Send(query);
+
+        return Ok(result);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] CreateDeviceCommand command)
     {
