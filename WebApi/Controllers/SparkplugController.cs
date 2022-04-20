@@ -48,7 +48,11 @@ public class SparkplugController : ControllerBase
     [HttpGet("knownmetrics")]
     public IActionResult GetKnownMetrics()
     {
-        return Ok(_sparkplugDataAdapter.KnownMetrics());
+        var result = _sparkplugDataAdapter.KnownMetrics();
+
+        List<string> listName = result.Select(r => r.Name).ToList();
+
+        return Ok(listName);
     }
 
     [HttpGet("loadknownmetrics")]
@@ -56,11 +60,20 @@ public class SparkplugController : ControllerBase
     {
         var result = await _mediator.Send(new GetAllTagsQuery());
 
+        List<string> listName = _sparkplugDataAdapter.KnownMetrics().Select(r => r.Name).ToList();
+
         foreach(Tag tag in result)
         {
-            _sparkplugDataAdapter.AddKnownMetric(tag.Name, tag.DataType);
+            int index = listName.IndexOf(tag.Name);
+
+            if (index == -1)
+            {
+                _sparkplugDataAdapter.AddKnownMetric(tag.Name, tag.DataType);
+            }           
         }
 
-        return Ok(_sparkplugDataAdapter.KnownMetrics());
+        listName = _sparkplugDataAdapter.KnownMetrics().Select(r => r.Name).ToList();
+
+        return Ok(listName);
     }
 }
