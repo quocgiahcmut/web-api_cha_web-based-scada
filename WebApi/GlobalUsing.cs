@@ -36,3 +36,4 @@ global using Infrastructure.InfluxDb;
 
 global using WebApi.Hubs;
 global using WebApi.Sparkplug;
+global using WebApi.Service;

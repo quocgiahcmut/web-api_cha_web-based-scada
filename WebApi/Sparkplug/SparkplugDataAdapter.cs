@@ -9,24 +9,20 @@ public class SparkplugDataAdapter
     private VersionB.SparkplugApplication _sparkplugApplication;
     private SparkplugApplicationOptions _sparkplugApplicationOptions;
 
-    public SparkplugDataAdapter(IOptions<SparkplugDataAdapterOptions> options, IServiceScopeFactory serviceScopeFactory)
+    public Action<SparkplugNodeConnectionChangedEvent> NodeConnectionChanged;
+    public Action<SparkplugDeviceConnectionChangedEvent> DeviceConnectionChanged;
+    public Action<SparkplugMetricsChangedEvent> MetricsUpdated;
+
+    public bool IsConnected => _sparkplugApplication.IsConnected;
+
+    public SparkplugDataAdapter(IOptions<SparkplugDataAdapterOptions> options, IServiceScopeFactory serviceScopeFactory , KnownMetricStore store)
     {
         _serviceScopeFactory = serviceScopeFactory;
 
         SparkplugDataAdapterOptions parameter = options.Value;
 
-        /*var metrics = new List<Metric>()
-        {
-            new Metric { Name = "tag000", ValueCase = DataType.Double, DoubleValue = 123.123 },
-            new Metric { Name = "tag111", ValueCase = DataType.Int32, IntValue = 111 }
-        };
-
-        var applicationMetrics = new List<Metric>(metrics);*/
-
-        var applicationMetrics = new List<Metric>()
-        {
-            new Metric { Name = "tag000", ValueCase = DataType.Int32, IntValue = 111 }
-        };
+        //var applicationMetrics = store.Metrics;
+        var applicationMetrics = new List<Metric>();
 
         _sparkplugApplication = new SparkplugApplication(applicationMetrics, Log.Logger);
         _sparkplugApplicationOptions = new SparkplugApplicationOptions(
@@ -49,6 +45,8 @@ public class SparkplugDataAdapter
     {
         await _sparkplugApplication.Start(_sparkplugApplicationOptions);
 
+        _sparkplugApplication.OnDisconnected = OnApplicationDisconnected;
+        _sparkplugApplication.OnDeviceDataReceived = OnVersionBDeviceDataReceived;
         _sparkplugApplication.SparkplugNodeConnectionChangedEvent = HandleNodeConnectionChanged;
         _sparkplugApplication.SparkplugDeviceConnectionChangedEvent = HandleDeviceConnectionChanged;
         _sparkplugApplication.SparkplugMetricsChangedEvent = HandleMetricsUpdated;
@@ -79,40 +77,31 @@ public class SparkplugDataAdapter
         _sparkplugApplication.KnownMetrics.Add(metric);
     }
 
-    public async void HandleNodeConnectionChanged(SparkplugNodeConnectionChangedEvent e)
+    public void HandleNodeConnectionChanged(SparkplugNodeConnectionChangedEvent e)
     {
-        var notification = new EonNodeConnectionChangedEvent(e.EonNodeId, e.Connected);
-
-        using (var scope = _serviceScopeFactory.CreateScope())
-        {
-            var mediator = scope.ServiceProvider.GetService<IMediator>();
-
-            await mediator.Publish(notification);
-        } 
+        NodeConnectionChanged.Invoke(e);
     }
     
-    public async void HandleDeviceConnectionChanged(SparkplugDeviceConnectionChangedEvent e)
+    public void HandleDeviceConnectionChanged(SparkplugDeviceConnectionChangedEvent e)
     {
-        var notification = new DeviceConnectionChangedEvent(e.EonNodeId, e.DeviceId, e.Connected);
-
-        using (var scope = _serviceScopeFactory.CreateScope())
-        {
-            var mediator = scope.ServiceProvider.GetService<IMediator>();
-
-            await mediator.Publish(notification);
-        }
+        DeviceConnectionChanged.Invoke(e);
     }
 
-    public async void HandleMetricsUpdated(SparkplugMetricsChangedEvent e)
+    public void HandleMetricsUpdated(SparkplugMetricsChangedEvent e)
     {
-        var notification = new TagValuesUpdatedEvent(e.EonNodeId, e.DeviceId, e.TagName, e.Value);
+        MetricsUpdated.Invoke(e);
+    }
 
-        using (var scope = _serviceScopeFactory.CreateScope())
-        {
-            var mediator = scope.ServiceProvider.GetService<IMediator>();
+    public void OnApplicationDisconnected()
+    {
+        Console.WriteLine("Disconnected !!!");
+    }
 
-            await mediator.Publish(notification);
-        }
+    public void OnVersionBDeviceDataReceived(Metric metric)
+    {
+        Console.WriteLine("nhan dc data r ne");
+        Console.WriteLine(metric.Name);
+        Console.WriteLine(metric.ValueCase.ToString());
     }
 
     public List<Metric> KnownMetrics()

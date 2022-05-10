@@ -15,16 +15,17 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSignalR();
 
+builder.Services.AddSingleton<KnownMetricStore>();
+builder.Services.Configure<SparkplugDataAdapterOptions>(configuration.GetSection("SparkplugDataAdapterOptions"));
+builder.Services.AddSingleton<SparkplugDataAdapter>();
+
 builder.Services.AddApplicationLayer();
 builder.Services.AddPersistenceInfrastructure(configuration);
 builder.Services.AddInfluxDbInfrastructure(configuration);
-builder.Services.AddSparkplugApplicationService(configuration);
+
+builder.Services.AddHostedService<SparkplugWorkerService>();
 
 var app = builder.Build();
-
-var sparkplugApplication = app.Services.GetService<SparkplugDataAdapter>();
-
-await sparkplugApplication.StartApplicationAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
