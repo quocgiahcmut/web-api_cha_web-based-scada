@@ -1,4 +1,6 @@
-﻿namespace WebApi.Hubs;
+﻿using Newtonsoft.Json;
+
+namespace WebApi.Hubs;
 
 public class WebSocketHub : Hub
 {
@@ -11,6 +13,14 @@ public class WebSocketHub : Hub
 
     public async Task<NodeQueryResult> GetListTags(NodeQuery nodeQuery)
     {
+        var result = await _mediator.Send(nodeQuery);
+
+        return result;
+    }
+
+    public async Task<NodeQueryResult> GetListTagsWithJson(string jsonNodeQuery)
+    {
+        var nodeQuery = JsonConvert.DeserializeObject<NodeQuery>(jsonNodeQuery);
         var result = await _mediator.Send(nodeQuery);
 
         return result;
